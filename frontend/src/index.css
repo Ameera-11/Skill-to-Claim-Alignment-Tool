@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+}
+
+/* Score meter animation */
+.score-fill {
+  transition: width 1.2s ease-in-out;
+}
+
+/* Claim card colors */
+.flag-strong       { border-left: 4px solid #22c55e; background: #f0fdf4; }
+.flag-vague        { border-left: 4px solid #f59e0b; background: #fffbeb; }
+.flag-inflated     { border-left: 4px solid #ef4444; background: #fef2f2; }
+.flag-unverifiable { border-left: 4px solid #8b5cf6; background: #faf5ff; }
+.flag-gap          { border-left: 4px solid #6b7280; background: #f9fafb; }
