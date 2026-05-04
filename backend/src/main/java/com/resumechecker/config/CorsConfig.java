@@ -1,27 +1,18 @@
 package com.resumechecker.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * CORS CONFIG
- * This allows your React app (running on port 5173)
- * to make API calls to this Spring Boot server (port 8080).
- * Without this, browsers block cross-origin requests.
- */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    @Value("${cors.allowed.origin}")
-    private String allowedOrigin="*";
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-            .allowedOriginPatterns("*")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            .allowedHeaders("*");
-}
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .maxAge(3600);
+    }
 }
