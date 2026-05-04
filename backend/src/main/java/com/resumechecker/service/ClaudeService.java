@@ -25,7 +25,7 @@ import okhttp3.Response;
 @Service
 public class ClaudeService {
 
-    @Value("${groq.api.key}")
+    @Value("${groq.api.key:NOT_SET}")
     private String apiKey;
 
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
