@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,8 +24,16 @@ import okhttp3.Response;
 @Service
 public class ClaudeService {
 
-    @Value("${groq.api.key:NOT_SET}")
     private String apiKey;
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        this.apiKey = System.getenv("GROQ_API_KEY");
+        if (this.apiKey == null || this.apiKey.isBlank()) {
+            this.apiKey = "not-set";
+    }
+    System.out.println("✅ Groq API Key loaded: " + apiKey.substring(0, 8) + "...");
+}
 
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
