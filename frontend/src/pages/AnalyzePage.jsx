@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const API_BASE = 'http://localhost:8080/api'
+const API_BASE = 'https://skill-to-claim-alignment-tool.onrender.com/api'
 
 export default function AnalyzePage() {
   const navigate    = useNavigate()

@@ -1,13 +1,20 @@
 package com.resumechecker.service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resumechecker.model.GitHubProfile;
-import okhttp3.*;
-import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * GITHUB SERVICE
@@ -20,8 +27,18 @@ import java.util.concurrent.TimeUnit;
  * - Top programming languages used
  * - Recent activity summary
  */
+
+
 @Service
 public class GitHubService {
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        this.githubToken = System.getenv("GITHUB_TOKEN");
+        if (this.githubToken == null) this.githubToken = "";
+}
+
+    private String githubToken = "";
 
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -31,6 +48,7 @@ public class GitHubService {
                 Request request = chain.request().newBuilder()
                         .addHeader("User-Agent", "ResumeChecker-App")
                         .addHeader("Accept", "application/vnd.github.v3+json")
+                        .addHeader("Authorization", "Bearer " + githubToken)
                         .build();
                 return chain.proceed(request);
             })
